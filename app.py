@@ -1,5 +1,5 @@
 class Player(pygame.sprite.Sprite):
-    def _init_(self, pos_x,pos_y):
+    def __init__(self, pos_x,pos_y):
         super()._init_()
         self.is_animating = False
         self.sprites = []
@@ -31,3 +31,40 @@ class Player(pygame.sprite.Sprite):
                 #self.is_animating = False
                 
             self.image = self.sprites[int(self.sprite_atual)]
+            
+#Configuração geral
+ 
+pygame.init()
+clock = pygame.time.Clock()
+
+#Tela do jogo
+
+screen_width = 400
+screen_height = 400
+screen = pygame.display.set_mode((screen_width,screen_height))
+pygame.display.set_caption('Crisis Scape')
+
+#Criando os sprites e os grupos
+pos_x = 10
+pos_y = 10
+moving_sprites = pygame.sprite.Group()
+player = Player(pos_x,pos_y)
+moving_sprites.add(player)
+
+while True:
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.KEYDOWN:
+            player.animate()
+            
+
+
+    #Desenhando
+        screen.fill((0,0,0))
+        moving_sprites.draw(screen)
+        moving_sprites.update()
+        pygame.display.flip()
+        clock.tick(60)
